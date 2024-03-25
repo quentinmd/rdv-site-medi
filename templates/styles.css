@@ -1,0 +1,32 @@
+/* Styles pour le container */
+.container {
+    max-width: 500px;
+    margin: auto;
+}
+
+/* Styles pour le formulaire */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+/* Styles pour le bouton */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.btn-primary:focus,
+.btn-primary.focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+}
+
+/* Styles pour l'image QR Code */
+#qrCode img {
+    max-width: 100%;
+    height: auto;
+}

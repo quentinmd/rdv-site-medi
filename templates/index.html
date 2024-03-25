@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Booking</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Appointment Booking</h2>
+        <form id="appointmentForm" class="mt-4">
+            <div class="form-group">
+                <label for="patientName">Patient Name</label>
+                <input type="text" class="form-control" id="patientName" required>
+            </div>
+            <div class="form-group">
+                <label for="patientEmail">Patient Email</label>
+                <input type="email" class="form-control" id="patientEmail" required>
+            </div>
+            <div class="form-group">
+                <label for="appointmentTime">Appointment Time</label>
+                <input type="datetime-local" class="form-control" id="appointmentTime" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Book Appointment</button>
+        </form>
+        <div id="qrCode" class="mt-5 text-center"></div>
+    </div>
+
+    <script>
+        document.getElementById('appointmentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const patientName = document.getElementById('patientName').value;
+            const patientEmail = document.getElementById('patientEmail').value;
+            const appointmentTime = document.getElementById('appointmentTime').value;
+
+            fetch('/create_appointment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    'patient_name': patientName,
+                    'patient_email': patientEmail,
+                    'appointment_time': appointmentTime
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('qrCode').innerHTML = `<img src="static/access_code_qr.png" alt="QR Code">`;
+                alert('Appointment created successfully. Access code: ' + data.access_code);
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
